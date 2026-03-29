@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends
 from sqlmodel import Session, select
 from database import engine
 from models.user import User
+from fastapi import HTTPException
 
 router = APIRouter()
 
@@ -20,3 +21,18 @@ def create_user(user: User, session: Session = Depends(get_session)):
 def list_users(session: Session = Depends(get_session)):
     users = session.exec(select(User)).all()
     return users
+
+@router.put("/users/{user_id}")
+def update_user(user_id: int, new_data: User, session: Session = Depends(get_session)):
+    user = session.get(User, user_id)
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    user.name = new_data.name
+    user.mood = new_data.mood
+
+    session.add(user)
+    session.commit()
+    session.refresh(user)
+
+    return user

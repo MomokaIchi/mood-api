@@ -1,6 +1,9 @@
 from fastapi import FastAPI
 from database import create_db_and_tables
 from routers.users import router as users_router
+from models.user import User
+from models.post import Post
+
 
 app = FastAPI()
 

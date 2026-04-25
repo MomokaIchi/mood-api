@@ -1,19 +1,17 @@
-from sqlmodel import SQLModel, Field
-from sqlalchemy.orm import relationship
+from __future__ import annotations
+from typing import TYPE_CHECKING
+from sqlmodel import SQLModel, Field, Relationship
+
+if TYPE_CHECKING:
+    from .follow import Follow
 
 class User(SQLModel, table=True):
     id: int | None = Field(default=None, primary_key=True)
     username: str
     hashed_password: str
 
-follows = relationship(
-    "Follow",
-    foreign_keys="Follow.follower_id",
-    backref="follower"
-)
+    # Users this user is following
+    following: list[Follow] = Relationship(back_populates="follower_user")
 
-followers = relationship(
-    "Follow",
-    foreign_keys="Follow.following_id",
-    backref="following"
-)
+    # Users who follow this user
+    followers: list[Follow] = Relationship(back_populates="following_user")

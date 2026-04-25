@@ -1,5 +1,5 @@
 # settings, secrets
-from pydantic-settings import BaseSettings
+from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
     SECRET_KEY: str = "your-secret-key"

@@ -5,14 +5,14 @@ from models.post import Post
 from schemas.post import PostCreate, PostRead, PostUpdate
 from fastapi import HTTPException
 
-router = APIRouter()
+router = APIRouter(prefix="/posts", tags=["Posts"])
 
 def get_session():
     with Session(engine) as session:
         yield session
 
 # Create
-@router.post("/posts", response_model=PostRead)
+@router.post("", response_model=PostRead)
 def create_post(post: PostCreate, session: Session = Depends(get_session)):
     new_post = Post(**post.dict())
     session.add(new_post)
@@ -21,13 +21,13 @@ def create_post(post: PostCreate, session: Session = Depends(get_session)):
     return new_post
 
 # Read
-@router.get("/posts")
+@router.get("")
 def list_posts(session: Session = Depends(get_session)):
     posts = session.exec(select(Post)).all()
     return posts
 
 # Update
-@router.put("/posts/{post_id}")
+@router.put("/{post_id}")
 def update_post(post_id: int, new_data: PostUpdate, session: Session = Depends(get_session)):
     post = session.get(Post, post_id)
     if not post:
@@ -42,7 +42,7 @@ def update_post(post_id: int, new_data: PostUpdate, session: Session = Depends(g
     return post
 
 # Delete
-@router.delete("/posts/{post_id}")
+@router.delete("/{post_id}")
 def delete_post(post_id: int, session: Session = Depends(get_session)):
     post = session.get(Post, post_id)
     if not post:

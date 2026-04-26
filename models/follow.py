@@ -14,8 +14,8 @@ class Follow(SQLModel, table=True):
     follower_id: int = Field(foreign_key="users.id")
     following_id: int = Field(foreign_key="users.id")
 
-    follower_user: User = Relationship(back_populates="following")
-    following_user: User = Relationship(back_populates="followers")
+    follower_user: "User" = Relationship(back_populates="following")
+    following_user: "User" = Relationship(back_populates="followers")
 
     __table_args__ = (
         UniqueConstraint("follower_id", "following_id", name="unique_follow"),

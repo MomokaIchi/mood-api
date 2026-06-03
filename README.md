@@ -1,8 +1,5 @@
-# mood-api
-
-## Overview
-A RESTful API for logging and recording daily moods.
-Built with FastAPI to practice backend development and clean API design.
+# MOOD-API
+A [RESTful API](#restful-api) for logging and managing daily moods. Built with [FastAPI](#fastapi) to practice backend development and clean API design.
 
 ## Features
 - 
@@ -12,9 +9,8 @@ Built with FastAPI to practice backend development and clean API design.
 - ...
 
 ## Project Structure
-
 ```
-MOOD
+MOOD/
 ├── core/
 │   ├── auth.py
 │   ├── config.py
@@ -60,11 +56,6 @@ URL: /docs
 
 ## Roadmap
 <future features>
-
-
-# MOOD-API
-A [RESTful API](#restful-api) for logging and managing daily moods. Built with [FastAPI](#fastapi) to practice backend development and clean API design.
-
 
 
 ## Words

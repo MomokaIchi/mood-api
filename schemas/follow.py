@@ -11,3 +11,7 @@ class FollowRead(SQLModel):
 class FollowingUser(SQLModel):
     id: int
     username: str
+
+class FollowerUser(SQLModel):
+    id: int
+    username: str

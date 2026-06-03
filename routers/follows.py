@@ -4,6 +4,8 @@ from database import get_session
 from models.follow import Follow
 from models.user import User
 from routers.auth import get_current_user
+from schemas.follow import FollowingUser, FollowerUser
+
 
 router = APIRouter(
     prefix="/users",
@@ -72,3 +74,41 @@ def unfollow_user(
     session.commit()
 
     return {"message": "Unfollowed successfully"}
+
+
+@router.get("/{user_id}/following", response_model=list[FollowingUser])
+def get_following(
+    user_id: int,
+    session: Session = Depends(get_session)
+):
+    user = session.get(User, user_id)
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    # user.following → list[Follow]
+    return [
+        FollowingUser(
+            id=f.following_user.id,
+            username=f.following_user.username
+        )
+        for f in user.following
+    ]
+
+
+@router.get("/{user_id}/followers", response_model=list[FollowerUser])
+def get_followers(
+    user_id: int,
+    session: Session = Depends(get_session)
+):
+    user = session.get(User, user_id)
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    # user.followers → list[Follow]
+    return [
+        FollowerUser(
+            id=f.follower_user.id,
+            username=f.follower_user.username
+        )
+        for f in user.followers
+    ]

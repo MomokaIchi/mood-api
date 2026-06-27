@@ -113,7 +113,7 @@ To be added.
 ---
 ## Project Structure
 ```text
-MOOD/
+mood-api/
 ├── core/
 │   ├── auth.py
 │   ├── config.py

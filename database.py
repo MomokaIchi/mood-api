@@ -1,7 +1,7 @@
 from __future__ import annotations
 from sqlmodel import SQLModel, create_engine, Session
 
-DATABASE_URL = "sqlite:///./test.db"
+DATABASE_URL = "sqlite:///./mood.db"
 
 engine = create_engine(
     DATABASE_URL,

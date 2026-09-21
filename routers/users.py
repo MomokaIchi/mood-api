@@ -1,20 +1,21 @@
 from fastapi import APIRouter, Depends
 from sqlmodel import Session, select
-from database import engine
+from database import get_session
 from models.user import User
 from schemas.user import UserCreate, UserRead, UserUpdate
+from core.security import hash_password
 from fastapi import HTTPException
 
-router = APIRouter(prefix="/users", tags=["Users"])
 
-def get_session():
-    with Session(engine) as session:
-        yield session
+router = APIRouter(prefix="/users", tags=["Users"])
 
 # Create
 @router.post("", response_model=UserRead)
 def create_user(user_data: UserCreate, session: Session = Depends(get_session)):
-    user = User(**user_data.dict())
+    user = User(
+    username=user_data.username,
+    hashed_password=hash_password(user_data.password)
+    )
     session.add(user)
     session.commit()
     session.refresh(user)
@@ -38,7 +39,7 @@ def update_user(
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
     
-    user.name = new_data.name
+    user.username = new_data.username
     session.add(user)
     session.commit()
     session.refresh(user)

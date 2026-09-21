@@ -1,6 +1,9 @@
 from __future__ import annotations
 from sqlmodel import SQLModel, Session
 from sqlalchemy import create_engine
+from models.user import User
+from models.post import Post
+from models.follow import Follow
 
 DATABASE_URL = "sqlite:///./mood.db"
 

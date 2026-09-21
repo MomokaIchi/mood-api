@@ -1,11 +1,12 @@
 from sqlmodel import SQLModel
 
 class UserCreate(SQLModel):
-    name: str
+    username: str
+    password: str
 
 class UserRead(SQLModel):
     id: int
-    name: str
+    username: str
 
 class UserUpdate(SQLModel):
-    name: str
+    username: str

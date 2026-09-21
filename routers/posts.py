@@ -1,15 +1,11 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlmodel import Session, select
-from database import engine
+from database import get_session
 from models.post import Post
 from schemas.post import PostCreate, PostRead, PostUpdate
 from fastapi import HTTPException
 
 router = APIRouter(prefix="/posts", tags=["Posts"])
-
-def get_session():
-    with Session(engine) as session:
-        yield session
 
 # Create
 @router.post("", response_model=PostRead)

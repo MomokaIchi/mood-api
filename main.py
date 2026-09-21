@@ -6,11 +6,9 @@ from routers.posts import router as posts_router
 from routers.auth import router as auth_router
 from routers.follows import router as follows_router
 
-
 app = FastAPI()
+# @app.on_event("startup")
 
-
-@app.on_event("startup")
 def on_startup():
     create_db_and_tables()
 
@@ -22,5 +20,6 @@ app.include_router(auth_router)
 app.include_router(follows_router)
 
 
+# .venv\Scripts\Activate.ps1
 # http://127.0.0.1:8000/docs
 # python -m uvicorn main:app --reload
